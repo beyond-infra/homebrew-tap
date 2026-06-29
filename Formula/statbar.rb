@@ -25,6 +25,10 @@ class Statbar < Formula
   end
 
   def post_install
+    ohai "statbar installed to #{opt_bin}/statbar — auto-starts on next login"
+  end
+
+  def caveats
     plist = etc/"com.statbar.plist"
     plist.write <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
@@ -43,20 +47,18 @@ class Statbar < Formula
       </plist>
     EOS
 
-    launch_dir = "#{Dir.home}/Library/LaunchAgents"
-    target = "#{launch_dir}/com.statbar.plist"
-    system "mkdir", "-p", launch_dir
-    system "cp", plist, target
-    system "launchctl", "bootstrap", "gui/#{Process.uid}", target
-    ohai "statbar installed — menu bar should appear immediately"
-  end
-
-  def caveats
     <<~EOS
-      statbar will auto-start on login. To stop it:
+      To auto-start statbar on login, run:
+        mkdir -p ~/Library/LaunchAgents
+        cp #{plist} ~/Library/LaunchAgents/com.statbar.plist
+
+      Then to start immediately (or just logout and back in):
+        launchctl bootstrap gui/#{Process.uid} ~/Library/LaunchAgents/com.statbar.plist
+
+      To stop:
         launchctl bootout gui/#{Process.uid}/com.statbar
 
-      Uninstall:
+      To uninstall:
         brew uninstall statbar
         rm ~/Library/LaunchAgents/com.statbar.plist
     EOS
