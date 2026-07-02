@@ -13,7 +13,7 @@ class Statbar < Formula
   desc "macOS menu bar CPU & memory monitor"
   homepage "https://github.com/beyond-infra/statbar"
   url "https://github.com/beyond-infra/statbar/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "fc17a0336ea7891a19bf00b25e21391bece5749512984bc26629de9f14c6baf1"
+  sha256 "8ed9e9365ca6790f5801f3ff8f334b9679ad5f27cd78de4bd24c9f8ceb19123a"
   license "MIT"
 
   depends_on macos: :ventura
